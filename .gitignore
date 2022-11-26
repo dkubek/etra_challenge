@@ -1,3 +1,9 @@
+# Don't include data
+data/
+
+# Don't include generated report
+*.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
