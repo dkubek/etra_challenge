@@ -44,8 +44,8 @@ class ETRA:
             for filename in archive.namelist():
                 file_path = self.data_dir / filename
                 if not file_path.exists():
-                    print("Extracting\t{filename}", file=sys.stderr)
-                    archive.extract(filename, path=file_path)
+                    print(f"Extracting\t{filename}", file=sys.stderr)
+                    archive.extract(filename, path=self.data_dir)
 
 
 def read_data(data_path: Union[str, Path]) -> pd.DataFrame:
@@ -71,11 +71,8 @@ def read_data(data_path: Union[str, Path]) -> pd.DataFrame:
 
 
 def detect(data):
-    screen_size = np.linalg.norm(SCREEN_SIZE)
-    screen_resolution = np.linalg.norm(SCREEN_RESOLUTION)
-    px2deg = np.rad2deg(np.arctan2(.5 * screen_size, VIEWING_DISTANCE) / (
-            .5 * screen_resolution))
-
+    px2deg = remodnav.clf.deg_per_pixel(SCREEN_SIZE[0], VIEWING_DISTANCE,
+                                        SCREEN_RESOLUTION[0])
     clf = remodnav.EyegazeClassifier(px2deg=px2deg,
                                      sampling_rate=SAMPLING_RATE)
 
