@@ -1,6 +1,9 @@
 # Don't include data
 data/
 
+# Don't include VSCode setting
+.idea/
+
 # Don't include generated report
 *.html
 
