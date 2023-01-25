@@ -55,6 +55,28 @@ dev = ["pytest", "cogapp", "pre-commit", "wheel"]
 tests = ["pytest"]
 
 [[package]]
+name = "arviz"
+version = "0.14.0"
+description = "Exploratory analysis of Bayesian models"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+matplotlib = ">=3.5"
+netcdf4 = "*"
+numpy = ">=1.20.0"
+packaging = "*"
+pandas = ">=1.4.0"
+scipy = ">=1.8.0"
+typing-extensions = ">=4.1.0"
+xarray = ">=0.21.0"
+xarray-einstats = ">=0.3"
+
+[package.extras]
+all = ["numba", "bokeh (>=1.4.0,<3.0)", "contourpy", "ujson", "dask", "zarr (>=2.5.0)"]
+
+[[package]]
 name = "astroid"
 version = "2.12.13"
 description = "An abstract syntax tree for Python with inference support."
@@ -169,22 +191,38 @@ css = ["tinycss2 (>=1.1.0,<1.2)"]
 dev = ["build (==0.8.0)", "flake8 (==4.0.1)", "hashin (==0.17.0)", "pip-tools (==6.6.2)", "pytest (==7.1.2)", "Sphinx (==4.3.2)", "tox (==3.25.0)", "twine (==4.0.1)", "wheel (==0.37.1)", "black (==22.3.0)", "mypy (==0.961)"]
 
 [[package]]
-name = "cateyes"
-version = "0.0.5"
-description = ""
+name = "cachetools"
+version = "5.3.0"
+description = "Extensible memoizing collections and decorators"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = "~=3.7"
+
+[[package]]
+name = "cateyes"
+version = "0.0.5"
+description = "Uniform Categorization of Eyetracking in Python."
+category = "main"
+optional = false
+python-versions = "^3.10"
 develop = false
+
+[package.dependencies]
+matplotlib = "^3.6.2"
+nslr = {git = "https://gitlab.com/nslr/nslr.git", branch = "master"}
+nslr-hmm = {git = "https://github.com/pupil-labs/nslr-hmm", branch = "master"}
+numpy = "^1.23.5"
+remodnav = "^1.1.1"
+scipy = "^1.9.3"
 
 [package.extras]
 uneye = ["uneye @ git+https://github.com/DiGyt/uneye.git@master"]
 
 [package.source]
 type = "git"
-url = "https://github.com/DiGyt/cateyes.git"
+url = "https://github.com/dkubek/cateyes"
 reference = "main"
-resolved_reference = "1630a9102af1233fcad5912e0986d08ffe32d8b4"
+resolved_reference = "ff498523c72ed32dbf564fced9807a1023f7a98b"
 
 [[package]]
 name = "cerberus"
@@ -214,6 +252,17 @@ python-versions = "*"
 pycparser = "*"
 
 [[package]]
+name = "cftime"
+version = "1.6.2"
+description = "Time-handling functionality from netcdf4-python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = ">1.13.3"
+
+[[package]]
 name = "charset-normalizer"
 version = "2.1.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
@@ -236,6 +285,14 @@ python-versions = ">=3.7"
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "cloudpickle"
+version = "2.2.1"
+description = "Extended pickling support for Python objects"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -256,6 +313,17 @@ traitlets = ">5.3"
 
 [package.extras]
 test = ["pytest"]
+
+[[package]]
+name = "cons"
+version = "0.4.5"
+description = "An implementation of Lisp/Scheme-like cons in Python."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+logical-unification = ">=0.4.0"
 
 [[package]]
 name = "contourpy"
@@ -327,6 +395,18 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "etuples"
+version = "0.3.8"
+description = "Python S-expression emulation using tuple-like objects."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cons = "*"
+multipledispatch = "*"
+
+[[package]]
 name = "executing"
 version = "1.2.0"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -347,6 +427,26 @@ python-versions = "*"
 
 [package.extras]
 devel = ["colorama", "jsonschema", "json-spec", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
+name = "fastprogress"
+version = "1.0.3"
+description = "A nested progress with plotting options for fastai"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
+name = "filelock"
+version = "3.9.0"
+description = "A platform independent file lock."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+docs = ["furo (>=2022.12.7)", "sphinx-autodoc-typehints (>=1.19.5)", "sphinx (>=5.3)"]
+testing = ["covdefaults (>=2.2.2)", "coverage (>=7.0.1)", "pytest-cov (>=4)", "pytest-timeout (>=2.1)", "pytest (>=7.2)"]
 
 [[package]]
 name = "fonttools"
@@ -665,6 +765,18 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "logical-unification"
+version = "0.4.5"
+description = "Logical unification in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+multipledispatch = "*"
+toolz = "*"
+
+[[package]]
 name = "markupsafe"
 version = "2.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -712,6 +824,21 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "minikanren"
+version = "1.0.3"
+description = "Relational programming in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cons = ">=0.4.0"
+etuples = ">=0.3.1"
+logical-unification = ">=0.4.1"
+multipledispatch = "*"
+toolz = "*"
+
+[[package]]
 name = "missingno"
 version = "0.5.1"
 description = "Missing data visualization module for Python."
@@ -735,6 +862,17 @@ description = "A sane Markdown parser with useful plugins and renderers"
 category = "main"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "multipledispatch"
+version = "0.6.0"
+description = "Multiple dispatch"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = "*"
 
 [[package]]
 name = "mypy-extensions"
@@ -854,6 +992,18 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "netcdf4"
+version = "1.6.2"
+description = "Provides an object-oriented python interface to the netCDF version 4 library."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cftime = "*"
+numpy = ">=1.9"
+
+[[package]]
 name = "notebook"
 version = "6.5.2"
 description = "A web-based notebook environment for interactive computing"
@@ -897,6 +1047,36 @@ jupyter-server = ">=1.8,<3"
 
 [package.extras]
 test = ["pytest", "pytest-console-scripts", "pytest-tornasync"]
+
+[[package]]
+name = "nslr"
+version = "0.0.5"
+description = "Naive Segmented Linear Regression"
+category = "main"
+optional = false
+python-versions = "*"
+develop = false
+
+[package.source]
+type = "git"
+url = "https://gitlab.com/nslr/nslr.git"
+reference = "master"
+resolved_reference = "b99f0b7bf2618d97384ed851a1d45fe6d8d74291"
+
+[[package]]
+name = "nslr-hmm"
+version = "0.0.1"
+description = "Python implementation of the NSLR-HMM eye movement identification algorithm."
+category = "main"
+optional = false
+python-versions = "*"
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/pupil-labs/nslr-hmm"
+reference = "master"
+resolved_reference = "78674f3f3021d84b82089ca57b9e33f85b0cc2b0"
 
 [[package]]
 name = "numpy"
@@ -1141,6 +1321,25 @@ spelling = ["pyenchant (>=3.2,<4.0)"]
 testutils = ["gitpython (>3)"]
 
 [[package]]
+name = "pymc"
+version = "5.0.2"
+description = "Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with PyTensor"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+arviz = ">=0.13.0"
+cachetools = ">=4.2.1"
+cloudpickle = "*"
+fastprogress = ">=0.2.0"
+numpy = ">=1.15.0"
+pandas = ">=0.24.0"
+pytensor = "2.9.1"
+scipy = ">=1.4.1"
+typing-extensions = ">=3.7.4"
+
+[[package]]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -1158,6 +1357,32 @@ description = "Persistent/Functional/Immutable data structures"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "pytensor"
+version = "2.9.1"
+description = "Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+cons = "*"
+etuples = "*"
+filelock = "*"
+logical-unification = "*"
+miniKanren = "*"
+numpy = ">=1.17.0"
+scipy = ">=0.14"
+typing-extensions = "*"
+
+[package.extras]
+complete = ["pytensor", "pytensor"]
+development = ["pytensor", "pytensor", "pytensor"]
+jax = ["jax", "jaxlib"]
+numba = ["numba (>=0.55)", "numba-scipy (>=0.3.0)"]
+rtd = ["sphinx (>=5.1.0,<6)", "pygments", "pydot", "pydot2", "pydot-ng"]
+tests = ["pytest", "pre-commit", "pytest-cov (>=2.6.1)", "coverage (>=5.1)", "pytest-benchmark"]
 
 [[package]]
 name = "python-dateutil"
@@ -1453,6 +1678,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "toolz"
+version = "0.12.0"
+description = "List processing tools and functional utilities"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
 name = "tornado"
 version = "6.2"
 description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
@@ -1531,6 +1764,46 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
+name = "xarray"
+version = "2023.1.0"
+description = "N-D labeled arrays and datasets in Python"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+numpy = ">=1.20"
+packaging = ">=21.3"
+pandas = ">=1.3"
+
+[package.extras]
+accel = ["scipy", "bottleneck", "numbagg", "flox"]
+complete = ["netcdf4", "h5netcdf", "scipy", "zarr", "fsspec", "cftime", "rasterio", "cfgrib", "pooch", "bottleneck", "numbagg", "flox", "dask", "matplotlib", "seaborn", "nc-time-axis", "pydap"]
+docs = ["netcdf4", "h5netcdf", "scipy", "zarr", "fsspec", "cftime", "rasterio", "cfgrib", "pooch", "bottleneck", "numbagg", "flox", "dask", "matplotlib", "seaborn", "nc-time-axis", "sphinx-autosummary-accessors", "sphinx-rtd-theme", "ipython", "ipykernel", "jupyter-client", "nbsphinx", "scanpydoc", "pydap"]
+io = ["netcdf4", "h5netcdf", "scipy", "zarr", "fsspec", "cftime", "rasterio", "cfgrib", "pooch", "pydap"]
+parallel = ["dask"]
+viz = ["matplotlib", "seaborn", "nc-time-axis"]
+
+[[package]]
+name = "xarray-einstats"
+version = "0.5.1"
+description = "Stats, linear algebra and einops for xarray"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+numpy = ">=1.20"
+scipy = ">=1.6"
+xarray = ">=2022.09.0"
+
+[package.extras]
+doc = ["furo", "myst-parser", "myst-nb", "sphinx-copybutton", "numpydoc", "sphinx (>=4)", "jupyter-sphinx", "sphinx-design", "watermark", "matplotlib"]
+einops = ["einops"]
+numba = ["numba (>=0.55)"]
+test = ["hypothesis", "pytest", "pytest-cov", "packaging"]
+
+[[package]]
 name = "yapf"
 version = "0.32.0"
 description = "A formatter for Python code."
@@ -1541,7 +1814,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "30128ba0fb149b342c6eff6df8574fa2be4b4b0ecf64d01169e2530f5173316c"
+content-hash = "e285fe39af7b0b9d8921f30f8d283eac329dede0a146e2301adf7b45fb8fe565"
 
 [metadata.files]
 anyio = []
@@ -1573,6 +1846,7 @@ argon2-cffi-bindings = [
     {file = "argon2_cffi_bindings-21.2.0-pp38-pypy38_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:ed2937d286e2ad0cc79a7087d3c272832865f779430e0cc2b4f3718d3159b0cb"},
     {file = "argon2_cffi_bindings-21.2.0-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:5e00316dabdaea0b2dd82d141cc66889ced0cdcbfa599e8b471cf22c620c329a"},
 ]
+arviz = []
 astroid = []
 asttokens = []
 attrs = []
@@ -1584,17 +1858,21 @@ backcall = [
 beautifulsoup4 = []
 black = []
 bleach = []
+cachetools = []
 cateyes = []
 cerberus = []
 certifi = []
 cffi = []
+cftime = []
 charset-normalizer = []
 click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
     {file = "click-8.1.3.tar.gz", hash = "sha256:7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"},
 ]
+cloudpickle = []
 colorama = []
 comm = []
+cons = []
 contourpy = []
 cycler = [
     {file = "cycler-0.11.0-py3-none-any.whl", hash = "sha256:3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3"},
@@ -1614,8 +1892,11 @@ entrypoints = [
     {file = "entrypoints-0.4-py3-none-any.whl", hash = "sha256:f174b5ff827504fd3cd97cc3f8649f3693f51538c7e4bdf3ef002c8429d42f9f"},
     {file = "entrypoints-0.4.tar.gz", hash = "sha256:b706eddaa9218a19ebcd67b56818f05bb27589b1ca9e8d797b74affad4ccacd4"},
 ]
+etuples = []
 executing = []
 fastjsonschema = []
+fastprogress = []
+filelock = []
 fonttools = []
 idna = []
 ipykernel = []
@@ -1641,12 +1922,15 @@ jupyterlab-pygments = []
 jupyterlab-server = []
 kiwisolver = []
 lazy-object-proxy = []
+logical-unification = []
 markupsafe = []
 matplotlib = []
 matplotlib-inline = []
 mccabe = []
+minikanren = []
 missingno = []
 mistune = []
+multipledispatch = []
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
@@ -1656,8 +1940,11 @@ nbclient = []
 nbconvert = []
 nbformat = []
 nest-asyncio = []
+netcdf4 = []
 notebook = []
 notebook-shim = []
+nslr = []
+nslr-hmm = []
 numpy = []
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
@@ -1706,8 +1993,10 @@ pycparser = [
 ]
 pygments = []
 pylint = []
+pymc = []
 pyparsing = []
 pyrsistent = []
+pytensor = []
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
@@ -1743,6 +2032,7 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 tomlkit = []
+toolz = []
 tornado = []
 traitlets = []
 typing-extensions = []
@@ -1822,4 +2112,6 @@ wrapt = [
     {file = "wrapt-1.14.1-cp39-cp39-win_amd64.whl", hash = "sha256:dee60e1de1898bde3b238f18340eec6148986da0455d8ba7848d50470a7a32fb"},
     {file = "wrapt-1.14.1.tar.gz", hash = "sha256:380a85cf89e0e69b7cfbe2ea9f765f004ff419f34194018a6827ac0e3edfed4d"},
 ]
+xarray = []
+xarray-einstats = []
 yapf = []
