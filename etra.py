@@ -105,7 +105,7 @@ def _detect(data):
     hlp["x"] = tmp.x.values
     hlp["y"] = tmp.y.values
 
-    pp = clf.preproc(hlp, max_vel=1500)
+    pp = clf.preproc(hlp)
 
     events = clf(pp, classify_isp=True, sort_events=True)
 
