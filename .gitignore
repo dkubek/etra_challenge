@@ -1,6 +1,10 @@
 # Don't include data
 data/
 
+# Don't include IDE settings
+.idea/
+.vscode/
+
 # Don't include generated report
 *.html
 
