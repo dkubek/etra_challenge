@@ -1,6 +1,9 @@
-# etra_challenge
+# ETRA Challenge
 
 Data Analysis of the ETRA Dataset.
+
+You can view the render of this report here: 
+https://github.com/dkubek/etra-challenge
 
 ## Setup
 
@@ -14,17 +17,35 @@ Then setup the environment by running
 poetry install
 ```
 
-Finally, enter the environment
+Finally, enter the environment with
 ```sh
 poetry shell
 ```
 
-You can run ```jupyter lab``` from within the environment with all the required dependencies present.
-
 ## Generating report
 
-To generate a html report run
+Firstly, install [Quarto](https://quarto.org/docs/get-started/index.html) and
+enter the poetry environment with all dependencies installed (``publish`` group
+is sufficient).
 
+To generate an html report run
 ```sh
-jupyter nbconvert --to html etra_challenge_report.ipynb --execute --no-input --template pj
+quarto render etra_challenge.qmd --to html
 ```
+
+To generate a pdf run
+```sh
+quarto render etra_challenge.qmd --to pdf
+```
+
+The output of these commands will be stored in ``output/``.
+
+## Publishing to github pages
+
+Enter the ``poetry`` environment.
+
+Locally run
+```sh
+quarto publish gh-pages
+```
+this will render the report and push the output to branch ``gh-pages``.
