@@ -530,7 +530,6 @@ subject ``022``.
 
 stimuli_natural = df_hyp1_natural_sacc.stimulus_id.unique()
 stimuli_natural.sort()
-stimuli_natural = stimuli_natural[:1]
 chains_natural = []
 for stimulus in stimuli_natural:
     trial = df_hyp1_natural_sacc[df_hyp1_natural_sacc.stimulus_id == stimulus]
@@ -594,7 +593,6 @@ We now repeat the exact same procedure, but for trials with _Blank_ scene.
  
 trials_blank = df_hyp1_blank_sacc.trial.unique()
 trials_blank.sort()
-trials_blank = trials_blank[:1]
 chains_blank = []
 for trial in trials_blank:
     trial_data = df_hyp1_blank_sacc[df_hyp1_blank_sacc.trial == trial]
