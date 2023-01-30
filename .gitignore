@@ -1,6 +1,12 @@
 # Don't include data
 data/
 
+# Ignore jupyter cache from Quatro
+.jupyter_cache/
+
+# Ignore output from QUatro
+output/
+
 # Don't include IDE settings
 .idea/
 .vscode/
@@ -137,3 +143,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+/.quarto/

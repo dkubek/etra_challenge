@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Union
 from zipfile import ZipFile
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import remodnav
 
 SCREEN_SIZE = (40, 30)  # cm x cm
@@ -25,7 +25,10 @@ class ETRA:
     # URL to ETRA Dataset
     _URL = "http://smc.neuralcorrelate.com/ETRA2019/ETRA2019Challenge.zip"
 
-    def __init__(self, data_dir: str = "data", dataset: str = "etra", download=True) -> None:
+    def __init__(self,
+                 data_dir: str = "data",
+                 dataset: str = "etra",
+                 download=True) -> None:
         self.data_dir = Path.cwd() / data_dir
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
@@ -73,27 +76,21 @@ def read_data(data_path: Union[str, Path]) -> pd.DataFrame:
         "stimulus_id": stimulus_id if stimulus_id else pd.NA,
     }
     df = df.assign(**new_cols)
-    df = df[
-        [
-            "participant_id",
-            "trial_id",
-            "fv_fixation",
-            "task_type",
-            "stimulus_id",
-        ]
-        + orig_cols
-    ]
+    df = df[[
+        "participant_id",
+        "trial_id",
+        "fv_fixation",
+        "task_type",
+        "stimulus_id",
+    ] + orig_cols]
 
     return df
 
 
 def _get_default_classifier():
-    px2deg = remodnav.clf.deg_per_pixel(
-        SCREEN_SIZE[0], VIEWING_DISTANCE, SCREEN_RESOLUTION[0]
-    )
-    clf = remodnav.EyegazeClassifier(
-        px2deg=px2deg, sampling_rate=SAMPLING_RATE
-    )
+    px2deg = remodnav.clf.deg_per_pixel(SCREEN_SIZE[0], VIEWING_DISTANCE,
+                                        SCREEN_RESOLUTION[0])
+    clf = remodnav.EyegazeClassifier(px2deg=px2deg, sampling_rate=SAMPLING_RATE)
     return clf
 
 
