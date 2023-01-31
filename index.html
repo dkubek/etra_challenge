@@ -617,18 +617,18 @@ div.csl-indent {
 <p>We are looking for a change in behaviour in our participants. To model it we will assume that in some initial time interval the number of saccades will follow some Poisson process with rate <span class="math inline">\(\lambda_1\)</span> up until some time <span class="math inline">\(\tau\)</span> after which <em>something</em> changes and the saccades will follow a different process with rate <span class="math inline">\(\lambda_2\)</span>.</p>
 <p>Let <span class="math inline">\(S_t\)</span> denote the count of saccades at time <span class="math inline">\(t\)</span>. We have <span class="math display">\[
     S_t \sim \mathrm{Poisson}(\lambda^{(t)})
-\]</span> However, we do not know what the parameter <span class="math inline">\(\lambda^{(t)}\)</span> is. It might be either <span class="math inline">\(\lambda_1\)</span> or <span class="math inline">\(\lambda_2\)</span> depending on where we put the changing point <span class="math inline">\(\tau\)</span>, so <span class="math display">\[
-    \lambda^{(t)} = \begin{cases}
-        \lambda_1 &amp;&amp; t &lt; \tau \\
-        \lambda_2 &amp;&amp; t \ge \tau
-    \end{cases}
-\]</span></p>
-<p>We will try to infer these variables from our data using Bayesian statistics. We will need to choose prior distributions to do that. For <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> we need to choose from continouous distribution that is able to obtain (potentially) all positive values. Exponential distribution satisfies this requirement, so we set <span class="math display">\[
-\begin{align*}
-    \lambda_1 \sim \mathrm{Exp}(\alpha)\\
-    \lambda_2 \sim \mathrm{Exp}(\alpha)
-\end{align*}
-\]</span> where <span class="math inline">\(\alpha\)</span> is some hyper-parameter. As we have no prior knowledge about <span class="math inline">\(\tau\)</span>, we simply choose <span class="math display">\[
+\]</span> However, we do not know what the parameter <span class="math inline">\(\lambda^{(t)}\)</span> is. It might be either <span class="math inline">\(\lambda_1\)</span> or <span class="math inline">\(\lambda_2\)</span> depending on where we put the changing point <span class="math inline">\(\tau\)</span>, so</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource {tex} number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>\lambda^{(t)} = </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  \begin{cases}</span>
+<span id="cb15-3"><a href="#cb15-3"></a>      \lambda_1 &amp; t &lt; \tau \\</span>
+<span id="cb15-4"><a href="#cb15-4"></a>      \lambda_2 &amp; t \ge \tau</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  \end{cases}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We will try to infer these variables from our data using Bayesian statistics. We will need to choose prior distributions to do that. For <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> we need to choose from continouous distribution that is able to obtain (potentially) all positive values. Exponential distribution satisfies this requirement, so we set</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource {tex} number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>\begin{align*}</span>
+<span id="cb16-2"><a href="#cb16-2"></a>    \lambda_1 \sim \mathrm{Exp}(\alpha)\\</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    \lambda_2 \sim \mathrm{Exp}(\alpha)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>\end{align*}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where <span class="math inline">\(\alpha\)</span> is some hyper-parameter. As we have no prior knowledge about <span class="math inline">\(\tau\)</span>, we simply choose <span class="math display">\[
     \tau \sim \mathrm{Unif}(0, 44)
 \]</span></p>
 <p>To help with the inference, we set the hyperparameter <span class="math inline">\(\alpha\)</span> such that <span class="math display">\[
@@ -653,43 +653,43 @@ Note
 <div class="cell" data-execution_count="16">
 <details>
 <summary>Define model for the saccade frequency</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">def</span> model_saccades(data):</span>
-<span id="cb15-2"><a href="#cb15-2"></a>    <span class="co"># Get the count data for one chosen trial</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>    count_data <span class="op">=</span> saccade_frequency_count_by_second(data)</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    count_data <span class="op">=</span> count_data.sacc_count</span>
-<span id="cb15-5"><a href="#cb15-5"></a>    n_count_data <span class="op">=</span> count_data.shape[<span class="dv">0</span>]</span>
-<span id="cb15-6"><a href="#cb15-6"></a>    </span>
-<span id="cb15-7"><a href="#cb15-7"></a>    <span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
-<span id="cb15-8"><a href="#cb15-8"></a>        alpha <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span>count_data.mean()</span>
-<span id="cb15-9"><a href="#cb15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10"></a>        lambda_1 <span class="op">=</span> pm.Exponential(<span class="st">"lambda_1"</span>, alpha)</span>
-<span id="cb15-11"><a href="#cb15-11"></a>        lambda_2 <span class="op">=</span> pm.Exponential(<span class="st">"lambda_2"</span>, alpha)</span>
-<span id="cb15-12"><a href="#cb15-12"></a></span>
-<span id="cb15-13"><a href="#cb15-13"></a>        tau <span class="op">=</span> pm.DiscreteUniform(<span class="st">"tau"</span>, lower<span class="op">=</span><span class="dv">0</span>, upper<span class="op">=</span>n_count_data <span class="op">-</span> <span class="dv">1</span>)</span>
-<span id="cb15-14"><a href="#cb15-14"></a></span>
-<span id="cb15-15"><a href="#cb15-15"></a>        index <span class="op">=</span> np.arange(n_count_data)</span>
-<span id="cb15-16"><a href="#cb15-16"></a>        lambda_ <span class="op">=</span> pm.math.switch( tau <span class="op">&gt;=</span> index, lambda_1, lambda_2 )</span>
-<span id="cb15-17"><a href="#cb15-17"></a>        </span>
-<span id="cb15-18"><a href="#cb15-18"></a>        delta <span class="op">=</span> pm.Deterministic(<span class="st">"delta"</span>, lambda_2 <span class="op">-</span> lambda_1)</span>
-<span id="cb15-19"><a href="#cb15-19"></a></span>
-<span id="cb15-20"><a href="#cb15-20"></a>        observation <span class="op">=</span> pm.Poisson(<span class="st">"obs"</span>, lambda_, observed<span class="op">=</span>count_data)</span>
-<span id="cb15-21"><a href="#cb15-21"></a>        </span>
-<span id="cb15-22"><a href="#cb15-22"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">def</span> model_saccades(data):</span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="co"># Get the count data for one chosen trial</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>    count_data <span class="op">=</span> saccade_frequency_count_by_second(data)</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    count_data <span class="op">=</span> count_data.sacc_count</span>
+<span id="cb17-5"><a href="#cb17-5"></a>    n_count_data <span class="op">=</span> count_data.shape[<span class="dv">0</span>]</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    </span>
+<span id="cb17-7"><a href="#cb17-7"></a>    <span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
+<span id="cb17-8"><a href="#cb17-8"></a>        alpha <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span>count_data.mean()</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a>        lambda_1 <span class="op">=</span> pm.Exponential(<span class="st">"lambda_1"</span>, alpha)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>        lambda_2 <span class="op">=</span> pm.Exponential(<span class="st">"lambda_2"</span>, alpha)</span>
+<span id="cb17-12"><a href="#cb17-12"></a></span>
+<span id="cb17-13"><a href="#cb17-13"></a>        tau <span class="op">=</span> pm.DiscreteUniform(<span class="st">"tau"</span>, lower<span class="op">=</span><span class="dv">0</span>, upper<span class="op">=</span>n_count_data <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb17-14"><a href="#cb17-14"></a></span>
+<span id="cb17-15"><a href="#cb17-15"></a>        index <span class="op">=</span> np.arange(n_count_data)</span>
+<span id="cb17-16"><a href="#cb17-16"></a>        lambda_ <span class="op">=</span> pm.math.switch( tau <span class="op">&gt;=</span> index, lambda_1, lambda_2 )</span>
+<span id="cb17-17"><a href="#cb17-17"></a>        </span>
+<span id="cb17-18"><a href="#cb17-18"></a>        delta <span class="op">=</span> pm.Deterministic(<span class="st">"delta"</span>, lambda_2 <span class="op">-</span> lambda_1)</span>
+<span id="cb17-19"><a href="#cb17-19"></a></span>
+<span id="cb17-20"><a href="#cb17-20"></a>        observation <span class="op">=</span> pm.Poisson(<span class="st">"obs"</span>, lambda_, observed<span class="op">=</span>count_data)</span>
+<span id="cb17-21"><a href="#cb17-21"></a>        </span>
+<span id="cb17-22"><a href="#cb17-22"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="17">
 <details>
 <summary>Run the chain</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>model <span class="op">=</span> model_saccades(scene)</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="cf">with</span> model:</span>
-<span id="cb16-3"><a href="#cb16-3"></a>    trace <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>model <span class="op">=</span> model_saccades(scene)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="cf">with</span> model:</span>
+<span id="cb18-3"><a href="#cb18-3"></a>    trace <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><a href="#fig-example-chain-posterior">Figure&nbsp;4</a> shows the posterior distributions of the parameters <span class="math inline">\(\tau\)</span>, <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span> and <span class="math inline">\(\Delta = \lambda_2 - \lambda_1\)</span>, while <a href="#tbl-example-chain-summary">Table&nbsp;3</a> provides summary statistics from the chain.</p>
 <div class="cell" data-execution_count="18">
 <details>
 <summary>Plot the posterior of model parameters</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>az.plot_posterior(trace)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>az.plot_posterior(trace)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-example-chain-posterior" class="quarto-figure quarto-figure-center anchored">
@@ -703,7 +703,7 @@ Note
 <div class="cell" data-execution_count="19">
 <details>
 <summary>Print summary statistics of the chain</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>az.summary(trace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>az.summary(trace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div id="tbl-example-chain-summary" class="anchored">
@@ -784,7 +784,7 @@ Note
 <div class="cell" data-execution_count="20">
 <details>
 <summary>Calculate the probability of null hypothesis</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>p_l2_ge_l1 <span class="op">=</span> np.mean(trace.posterior[<span class="st">"delta"</span>].values <span class="op">&gt;=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>p_l2_ge_l1 <span class="op">=</span> np.mean(trace.posterior[<span class="st">"delta"</span>].values <span class="op">&gt;=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We have</p>
@@ -800,47 +800,47 @@ Note
 <div class="cell" data-execution_count="22">
 <details>
 <summary>Sample the posterior distributions for all natural scenes</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>stimuli_natural <span class="op">=</span> df_hyp1_natural_sacc.stimulus_id.unique()</span>
-<span id="cb21-2"><a href="#cb21-2"></a>stimuli_natural.sort()</span>
-<span id="cb21-3"><a href="#cb21-3"></a>chains_natural <span class="op">=</span> []</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="cf">for</span> stimulus <span class="kw">in</span> stimuli_natural:</span>
-<span id="cb21-5"><a href="#cb21-5"></a>    trial <span class="op">=</span> df_hyp1_natural_sacc[df_hyp1_natural_sacc.stimulus_id <span class="op">==</span> stimulus]</span>
-<span id="cb21-6"><a href="#cb21-6"></a>    model <span class="op">=</span> model_saccades(trial)</span>
-<span id="cb21-7"><a href="#cb21-7"></a>    <span class="cf">with</span> model:</span>
-<span id="cb21-8"><a href="#cb21-8"></a>        chain <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span>
-<span id="cb21-9"><a href="#cb21-9"></a>        chains_natural.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>stimuli_natural <span class="op">=</span> df_hyp1_natural_sacc.stimulus_id.unique()</span>
+<span id="cb23-2"><a href="#cb23-2"></a>stimuli_natural.sort()</span>
+<span id="cb23-3"><a href="#cb23-3"></a>chains_natural <span class="op">=</span> []</span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="cf">for</span> stimulus <span class="kw">in</span> stimuli_natural:</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    trial <span class="op">=</span> df_hyp1_natural_sacc[df_hyp1_natural_sacc.stimulus_id <span class="op">==</span> stimulus]</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    model <span class="op">=</span> model_saccades(trial)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>    <span class="cf">with</span> model:</span>
+<span id="cb23-8"><a href="#cb23-8"></a>        chain <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span>
+<span id="cb23-9"><a href="#cb23-9"></a>        chains_natural.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="23">
 <details>
 <summary>Combine Natural data from all chains</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>combined_natural <span class="op">=</span> []</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="cf">for</span> stimulus, chain <span class="kw">in</span> <span class="bu">zip</span>(stimuli_natural, chains_natural):</span>
-<span id="cb22-3"><a href="#cb22-3"></a>    df <span class="op">=</span> chain.posterior.to_dataframe()</span>
-<span id="cb22-4"><a href="#cb22-4"></a>    df[<span class="st">"stimulus"</span>] <span class="op">=</span> stimulus</span>
-<span id="cb22-5"><a href="#cb22-5"></a>    combined_natural.append(df)</span>
-<span id="cb22-6"><a href="#cb22-6"></a>    </span>
-<span id="cb22-7"><a href="#cb22-7"></a>combined_natural <span class="op">=</span> pd.concat(combined_natural)</span>
-<span id="cb22-8"><a href="#cb22-8"></a>combined_natural <span class="op">=</span> combined_natural.assign(abs_delta<span class="op">=</span><span class="kw">lambda</span> _: np.<span class="bu">abs</span>(_[<span class="st">'delta'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>combined_natural <span class="op">=</span> []</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="cf">for</span> stimulus, chain <span class="kw">in</span> <span class="bu">zip</span>(stimuli_natural, chains_natural):</span>
+<span id="cb24-3"><a href="#cb24-3"></a>    df <span class="op">=</span> chain.posterior.to_dataframe()</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    df[<span class="st">"stimulus"</span>] <span class="op">=</span> stimulus</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    combined_natural.append(df)</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    </span>
+<span id="cb24-7"><a href="#cb24-7"></a>combined_natural <span class="op">=</span> pd.concat(combined_natural)</span>
+<span id="cb24-8"><a href="#cb24-8"></a>combined_natural <span class="op">=</span> combined_natural.assign(abs_delta<span class="op">=</span><span class="kw">lambda</span> _: np.<span class="bu">abs</span>(_[<span class="st">'delta'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><a href="#fig-natural-delta-posterior">Figure&nbsp;5</a> shows the posterior density estimate for <span class="math inline">\(\Delta\)</span> for all <em>Natural</em> scene trials.</p>
 <div class="cell" data-execution_count="24">
 <details>
 <summary>Plot Posterior density of <span class="math inline">\(\Delta\)</span> for all natural scenes.</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="co"># Truncate values to 99% most plausible</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>low, up <span class="op">=</span> combined_natural.delta.quantile([<span class="fl">0.005</span>, <span class="fl">0.995</span>])</span>
-<span id="cb23-4"><a href="#cb23-4"></a>hlp <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb23-5"><a href="#cb23-5"></a>hlp[statistic] <span class="op">=</span> combined_natural[statistic].where(combined_natural[statistic].between(low, up))</span>
-<span id="cb23-6"><a href="#cb23-6"></a>hlp[<span class="st">"stimulus"</span>] <span class="op">=</span> combined_natural[<span class="st">"stimulus"</span>]</span>
-<span id="cb23-7"><a href="#cb23-7"></a>hlp.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-8"><a href="#cb23-8"></a></span>
-<span id="cb23-9"><a href="#cb23-9"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>hlp, x<span class="op">=</span>statistic, hue<span class="op">=</span><span class="st">"stimulus"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, aspect<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb23-10"><a href="#cb23-10"></a>g.ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'dashed'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb23-11"><a href="#cb23-11"></a>g.set_xlabels(<span class="st">"$\Delta$"</span>)</span>
-<span id="cb23-12"><a href="#cb23-12"></a>g.set_ylabels(<span class="st">"Probability"</span>)</span>
-<span id="cb23-13"><a href="#cb23-13"></a>g.<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"Posterior density of $\Delta$"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="co"># Truncate values to 99% most plausible</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>low, up <span class="op">=</span> combined_natural.delta.quantile([<span class="fl">0.005</span>, <span class="fl">0.995</span>])</span>
+<span id="cb25-4"><a href="#cb25-4"></a>hlp <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb25-5"><a href="#cb25-5"></a>hlp[statistic] <span class="op">=</span> combined_natural[statistic].where(combined_natural[statistic].between(low, up))</span>
+<span id="cb25-6"><a href="#cb25-6"></a>hlp[<span class="st">"stimulus"</span>] <span class="op">=</span> combined_natural[<span class="st">"stimulus"</span>]</span>
+<span id="cb25-7"><a href="#cb25-7"></a>hlp.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-8"><a href="#cb25-8"></a></span>
+<span id="cb25-9"><a href="#cb25-9"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>hlp, x<span class="op">=</span>statistic, hue<span class="op">=</span><span class="st">"stimulus"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, aspect<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb25-10"><a href="#cb25-10"></a>g.ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'dashed'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb25-11"><a href="#cb25-11"></a>g.set_xlabels(<span class="st">"$\Delta$"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12"></a>g.set_ylabels(<span class="st">"Probability"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13"></a>g.<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"Posterior density of $\Delta$"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-natural-delta-posterior" class="quarto-figure quarto-figure-center anchored">
@@ -859,43 +859,43 @@ Note
 <div class="cell" data-execution_count="25">
 <details>
 <summary>Sample the posterior distributions for all blank scenes</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>trials_blank <span class="op">=</span> df_hyp1_blank_sacc.trial.unique()</span>
-<span id="cb24-2"><a href="#cb24-2"></a>trials_blank.sort()</span>
-<span id="cb24-3"><a href="#cb24-3"></a>chains_blank <span class="op">=</span> []</span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="cf">for</span> trial <span class="kw">in</span> trials_blank:</span>
-<span id="cb24-5"><a href="#cb24-5"></a>    trial_data <span class="op">=</span> df_hyp1_blank_sacc[df_hyp1_blank_sacc.trial <span class="op">==</span> trial]</span>
-<span id="cb24-6"><a href="#cb24-6"></a>    model <span class="op">=</span> model_saccades(trial_data)</span>
-<span id="cb24-7"><a href="#cb24-7"></a>    <span class="cf">with</span> model:</span>
-<span id="cb24-8"><a href="#cb24-8"></a>        chain <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span>
-<span id="cb24-9"><a href="#cb24-9"></a>        chains_blank.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>trials_blank <span class="op">=</span> df_hyp1_blank_sacc.trial.unique()</span>
+<span id="cb26-2"><a href="#cb26-2"></a>trials_blank.sort()</span>
+<span id="cb26-3"><a href="#cb26-3"></a>chains_blank <span class="op">=</span> []</span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="cf">for</span> trial <span class="kw">in</span> trials_blank:</span>
+<span id="cb26-5"><a href="#cb26-5"></a>    trial_data <span class="op">=</span> df_hyp1_blank_sacc[df_hyp1_blank_sacc.trial <span class="op">==</span> trial]</span>
+<span id="cb26-6"><a href="#cb26-6"></a>    model <span class="op">=</span> model_saccades(trial_data)</span>
+<span id="cb26-7"><a href="#cb26-7"></a>    <span class="cf">with</span> model:</span>
+<span id="cb26-8"><a href="#cb26-8"></a>        chain <span class="op">=</span> pm.sample(<span class="dv">5_000</span>)</span>
+<span id="cb26-9"><a href="#cb26-9"></a>        chains_blank.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="26">
 <details>
 <summary>Combine Blank data from all chains</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>combined_blank <span class="op">=</span> []</span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="cf">for</span> trial, chain <span class="kw">in</span> <span class="bu">zip</span>(trials_blank, chains_blank):</span>
-<span id="cb25-3"><a href="#cb25-3"></a>    df <span class="op">=</span> chain.posterior.to_dataframe()</span>
-<span id="cb25-4"><a href="#cb25-4"></a>    df[<span class="st">"trial"</span>] <span class="op">=</span> trial</span>
-<span id="cb25-5"><a href="#cb25-5"></a>    combined_blank.append(df)</span>
-<span id="cb25-6"><a href="#cb25-6"></a>    </span>
-<span id="cb25-7"><a href="#cb25-7"></a>combined_blank <span class="op">=</span> pd.concat(combined_blank)</span>
-<span id="cb25-8"><a href="#cb25-8"></a>combined_blank <span class="op">=</span> combined_blank.assign(abs_delta<span class="op">=</span><span class="kw">lambda</span> _: np.<span class="bu">abs</span>(_[<span class="st">'delta'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>combined_blank <span class="op">=</span> []</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="cf">for</span> trial, chain <span class="kw">in</span> <span class="bu">zip</span>(trials_blank, chains_blank):</span>
+<span id="cb27-3"><a href="#cb27-3"></a>    df <span class="op">=</span> chain.posterior.to_dataframe()</span>
+<span id="cb27-4"><a href="#cb27-4"></a>    df[<span class="st">"trial"</span>] <span class="op">=</span> trial</span>
+<span id="cb27-5"><a href="#cb27-5"></a>    combined_blank.append(df)</span>
+<span id="cb27-6"><a href="#cb27-6"></a>    </span>
+<span id="cb27-7"><a href="#cb27-7"></a>combined_blank <span class="op">=</span> pd.concat(combined_blank)</span>
+<span id="cb27-8"><a href="#cb27-8"></a>combined_blank <span class="op">=</span> combined_blank.assign(abs_delta<span class="op">=</span><span class="kw">lambda</span> _: np.<span class="bu">abs</span>(_[<span class="st">'delta'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="27">
 <details>
 <summary>Plot posterior density of <span class="math inline">\(\Delta\)</span> for all blank scenes.</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co"># Truncate values to 99% most plausible</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>low, up <span class="op">=</span> combined_blank.delta.quantile([<span class="fl">0.005</span>, <span class="fl">0.995</span>])</span>
-<span id="cb26-4"><a href="#cb26-4"></a>hlp <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb26-5"><a href="#cb26-5"></a>hlp[statistic] <span class="op">=</span> combined_blank[statistic].where(combined_blank[statistic].between(low, up))</span>
-<span id="cb26-6"><a href="#cb26-6"></a>hlp[<span class="st">"trial"</span>] <span class="op">=</span> combined_blank[<span class="st">"trial"</span>]</span>
-<span id="cb26-7"><a href="#cb26-7"></a>hlp.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb26-8"><a href="#cb26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>hlp, x<span class="op">=</span><span class="st">"delta"</span>, hue<span class="op">=</span><span class="st">"trial"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, aspect<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb26-10"><a href="#cb26-10"></a>g.ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'dashed'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co"># Truncate values to 99% most plausible</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>low, up <span class="op">=</span> combined_blank.delta.quantile([<span class="fl">0.005</span>, <span class="fl">0.995</span>])</span>
+<span id="cb28-4"><a href="#cb28-4"></a>hlp <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb28-5"><a href="#cb28-5"></a>hlp[statistic] <span class="op">=</span> combined_blank[statistic].where(combined_blank[statistic].between(low, up))</span>
+<span id="cb28-6"><a href="#cb28-6"></a>hlp[<span class="st">"trial"</span>] <span class="op">=</span> combined_blank[<span class="st">"trial"</span>]</span>
+<span id="cb28-7"><a href="#cb28-7"></a>hlp.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-8"><a href="#cb28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>hlp, x<span class="op">=</span><span class="st">"delta"</span>, hue<span class="op">=</span><span class="st">"trial"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, aspect<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb28-10"><a href="#cb28-10"></a>g.ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'dashed'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-blank-delta-posterior" class="quarto-figure quarto-figure-center anchored">
@@ -909,8 +909,8 @@ Note
 <div class="cell" data-execution_count="28">
 <details>
 <summary>Compute probabilities of extreme cases</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>p_l2_lt_l1_094 <span class="op">=</span> (combined_blank[combined_blank.trial <span class="op">==</span> <span class="st">"094"</span>].delta <span class="op">&lt;</span> <span class="dv">0</span>).mean()</span>
-<span id="cb27-2"><a href="#cb27-2"></a>p_l2_gt_l1_070 <span class="op">=</span> (combined_blank[combined_blank.trial <span class="op">==</span> <span class="st">"070"</span>].delta <span class="op">&gt;</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>p_l2_lt_l1_094 <span class="op">=</span> (combined_blank[combined_blank.trial <span class="op">==</span> <span class="st">"094"</span>].delta <span class="op">&lt;</span> <span class="dv">0</span>).mean()</span>
+<span id="cb29-2"><a href="#cb29-2"></a>p_l2_gt_l1_070 <span class="op">=</span> (combined_blank[combined_blank.trial <span class="op">==</span> <span class="st">"070"</span>].delta <span class="op">&gt;</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The situation here is much more diverse in this case. We can see that we can find trials on both ends of the spectrum when considering the change in frequency of saccades. For example, for the trial <code>094</code> we have</p>
@@ -934,7 +934,7 @@ Note
 <div class="cell" data-execution_count="31">
 <details>
 <summary>Compute the probability of null hypothesis being true</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>p_l2_ge_l1_natural_combined <span class="op">=</span> (combined_natural.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>p_l2_ge_l1_natural_combined <span class="op">=</span> (combined_natural.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Considering all natural scenes as a whole, the probability that the frequency of saccades does not decrease is</p>
@@ -947,7 +947,7 @@ Note
 <div class="cell" data-execution_count="33">
 <details>
 <summary>Compute probability of null hypothesis for Blank trials</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>p_l2_ge_l1_blank_combined <span class="op">=</span> (combined_blank.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>p_l2_ge_l1_blank_combined <span class="op">=</span> (combined_blank.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Considering all the blank trials as a whole, the probability of increase in saccades is</p>
@@ -984,20 +984,20 @@ Note
 <div class="cell" data-execution_count="35">
 <details>
 <summary>Load data</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>df_hyp2 <span class="op">=</span> (dataset.data_dir <span class="op">/</span> <span class="st">"data"</span> <span class="op">/</span> <span class="st">"</span><span class="sc">{0:0&gt;3}</span><span class="st">"</span>.<span class="bu">format</span>(subject_no)).glob(<span class="st">"*FreeViewing_*.csv"</span>)</span>
-<span id="cb34-2"><a href="#cb34-2"></a>df_hyp2 <span class="op">=</span> pd.concat((read_data(f) <span class="cf">for</span> f <span class="kw">in</span> df_hyp2)).sort_values(by<span class="op">=</span><span class="st">"Time"</span>)</span>
-<span id="cb34-3"><a href="#cb34-3"></a></span>
-<span id="cb34-4"><a href="#cb34-4"></a>df_hyp2 <span class="op">=</span> df_hyp2.rename({<span class="st">"Time"</span>: <span class="st">"time"</span>, <span class="st">"trial_id"</span>: <span class="st">"trial"</span>, <span class="st">"RP"</span>: <span class="st">"rp"</span>}, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb34-5"><a href="#cb34-5"></a>df_hyp2[<span class="st">"time"</span>] <span class="op">=</span> df_hyp2.groupby([<span class="st">"participant_id"</span>, <span class="st">"trial"</span>])[<span class="st">"time"</span>].transform(<span class="kw">lambda</span> x: x <span class="op">-</span> x.<span class="bu">min</span>())</span>
-<span id="cb34-6"><a href="#cb34-6"></a></span>
-<span id="cb34-7"><a href="#cb34-7"></a>df_hyp2 <span class="op">=</span> df_hyp2[[<span class="st">'participant_id'</span>, <span class="st">'trial'</span>, <span class="st">'fv_fixation'</span>, <span class="st">'task_type'</span>, <span class="st">'stimulus_id'</span>,</span>
-<span id="cb34-8"><a href="#cb34-8"></a>       <span class="st">'time'</span>,<span class="st">'rp'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>df_hyp2 <span class="op">=</span> (dataset.data_dir <span class="op">/</span> <span class="st">"data"</span> <span class="op">/</span> <span class="st">"</span><span class="sc">{0:0&gt;3}</span><span class="st">"</span>.<span class="bu">format</span>(subject_no)).glob(<span class="st">"*FreeViewing_*.csv"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a>df_hyp2 <span class="op">=</span> pd.concat((read_data(f) <span class="cf">for</span> f <span class="kw">in</span> df_hyp2)).sort_values(by<span class="op">=</span><span class="st">"Time"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a>df_hyp2 <span class="op">=</span> df_hyp2.rename({<span class="st">"Time"</span>: <span class="st">"time"</span>, <span class="st">"trial_id"</span>: <span class="st">"trial"</span>, <span class="st">"RP"</span>: <span class="st">"rp"</span>}, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb36-5"><a href="#cb36-5"></a>df_hyp2[<span class="st">"time"</span>] <span class="op">=</span> df_hyp2.groupby([<span class="st">"participant_id"</span>, <span class="st">"trial"</span>])[<span class="st">"time"</span>].transform(<span class="kw">lambda</span> x: x <span class="op">-</span> x.<span class="bu">min</span>())</span>
+<span id="cb36-6"><a href="#cb36-6"></a></span>
+<span id="cb36-7"><a href="#cb36-7"></a>df_hyp2 <span class="op">=</span> df_hyp2[[<span class="st">'participant_id'</span>, <span class="st">'trial'</span>, <span class="st">'fv_fixation'</span>, <span class="st">'task_type'</span>, <span class="st">'stimulus_id'</span>,</span>
+<span id="cb36-8"><a href="#cb36-8"></a>       <span class="st">'time'</span>,<span class="st">'rp'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="36">
 <details>
 <summary>List a sample of data for hypothesis 2.</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>df_hyp2.head() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>df_hyp2.head() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="35">
 <div id="tbl-hyp2-data" class="anchored">
@@ -1081,19 +1081,19 @@ Note
 <div class="cell" data-execution_count="37">
 <details>
 <summary>Remove blinks and calculate average pupil size.</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>df_hyp2_avg_rp <span class="op">=</span> df_hyp2.groupby(<span class="st">"trial"</span>)<span class="op">\</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>    .<span class="bu">apply</span>(remove_blinks)<span class="op">\</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
-<span id="cb36-4"><a href="#cb36-4"></a>    .groupby([<span class="st">"trial"</span>, <span class="st">"task_type"</span>])<span class="op">\</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a>    .agg(avg_rp<span class="op">=</span>(<span class="st">'rp'</span>, <span class="st">'mean'</span>))<span class="op">\</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a>    .reset_index()<span class="op">\</span></span>
-<span id="cb36-7"><a href="#cb36-7"></a>    .drop(<span class="st">"trial"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>df_hyp2_avg_rp <span class="op">=</span> df_hyp2.groupby(<span class="st">"trial"</span>)<span class="op">\</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>    .<span class="bu">apply</span>(remove_blinks)<span class="op">\</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>    .groupby([<span class="st">"trial"</span>, <span class="st">"task_type"</span>])<span class="op">\</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>    .agg(avg_rp<span class="op">=</span>(<span class="st">'rp'</span>, <span class="st">'mean'</span>))<span class="op">\</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>    .reset_index()<span class="op">\</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>    .drop(<span class="st">"trial"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="38">
 <details>
 <summary>Report the average pupil size for each task type.</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>df_hyp2_avg_rp.head().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>df_hyp2_avg_rp.head().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="37">
 <div id="tbl-avg-rp" class="anchored">
@@ -1147,10 +1147,10 @@ Note
 <div class="cell" data-execution_count="39">
 <details>
 <summary>Plot the distribution of the average pupil size.</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>g <span class="op">=</span> sns.catplot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'task_type'</span>, y<span class="op">=</span><span class="st">'avg_rp'</span>, kind<span class="op">=</span><span class="st">'box'</span>, aspect<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>g.set_xlabels(<span class="st">"Task type"</span>)</span>
-<span id="cb38-3"><a href="#cb38-3"></a>g.set_ylabels(<span class="st">"Average pupil size"</span>)</span>
-<span id="cb38-4"><a href="#cb38-4"></a>g.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Average pupil size distribution."</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>g <span class="op">=</span> sns.catplot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'task_type'</span>, y<span class="op">=</span><span class="st">'avg_rp'</span>, kind<span class="op">=</span><span class="st">'box'</span>, aspect<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>g.set_xlabels(<span class="st">"Task type"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3"></a>g.set_ylabels(<span class="st">"Average pupil size"</span>)</span>
+<span id="cb40-4"><a href="#cb40-4"></a>g.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Average pupil size distribution."</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-avg-rp-dist-box" class="quarto-figure quarto-figure-center anchored">
@@ -1164,7 +1164,7 @@ Note
 <div class="cell" data-execution_count="40">
 <details>
 <summary>Compute summary statistics for average pupil sizes</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>df_hyp2_avg_rp.groupby(<span class="st">"task_type"</span>).describe().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>df_hyp2_avg_rp.groupby(<span class="st">"task_type"</span>).describe().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="39">
 <div id="tbl-avg-rp-summary" class="anchored">
@@ -1255,9 +1255,9 @@ Note
 <div class="cell" data-execution_count="41">
 <details>
 <summary>Plot the distribution of average pupil sizes</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'avg_rp'</span>, hue<span class="op">=</span><span class="st">'task_type'</span>, col<span class="op">=</span><span class="st">"task_type"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a>g.set_xlabels(<span class="st">"Average pupil size"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3"></a>g.set_ylabels(<span class="st">"Count"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'avg_rp'</span>, hue<span class="op">=</span><span class="st">'task_type'</span>, col<span class="op">=</span><span class="st">"task_type"</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a>g.set_xlabels(<span class="st">"Average pupil size"</span>)</span>
+<span id="cb42-3"><a href="#cb42-3"></a>g.set_ylabels(<span class="st">"Count"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-avg-rp-dist-bar" class="quarto-figure quarto-figure-center anchored">
@@ -1272,10 +1272,10 @@ Note
 <div class="cell" data-execution_count="42">
 <details>
 <summary>Compute Shapiro-Wilk test for distribution normality</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a><span class="bu">print</span>(<span class="st">"Resulting p-values from the Shapiro-Wilk test:</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="cf">for</span> task_type <span class="kw">in</span> [<span class="st">"Blank"</span>, <span class="st">"Puzzle"</span>, <span class="st">"Waldo"</span>, <span class="st">"Natural"</span>]:</span>
-<span id="cb41-3"><a href="#cb41-3"></a>    shapiro_result <span class="op">=</span> stats.shapiro(df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> task_type].avg_rp)</span>
-<span id="cb41-4"><a href="#cb41-4"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="sc">{}</span><span class="ch">\t</span><span class="st">: </span><span class="sc">{:0.3}</span><span class="st">"</span>.<span class="bu">format</span>(task_type, shapiro_result.pvalue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a><span class="bu">print</span>(<span class="st">"Resulting p-values from the Shapiro-Wilk test:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="cf">for</span> task_type <span class="kw">in</span> [<span class="st">"Blank"</span>, <span class="st">"Puzzle"</span>, <span class="st">"Waldo"</span>, <span class="st">"Natural"</span>]:</span>
+<span id="cb43-3"><a href="#cb43-3"></a>    shapiro_result <span class="op">=</span> stats.shapiro(df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> task_type].avg_rp)</span>
+<span id="cb43-4"><a href="#cb43-4"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="sc">{}</span><span class="ch">\t</span><span class="st">: </span><span class="sc">{:0.3}</span><span class="st">"</span>.<span class="bu">format</span>(task_type, shapiro_result.pvalue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Resulting p-values from the Shapiro-Wilk test:
@@ -1294,15 +1294,15 @@ Note
 <div class="cell" data-execution_count="43">
 <details>
 <summary>Compute paired t-test for each category with the baseline.</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>baseline <span class="op">=</span> <span class="st">"Blank"</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a></span>
-<span id="cb43-3"><a href="#cb43-3"></a><span class="bu">print</span>(<span class="st">"Resulting p-values from the paired t-test:</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb43-4"><a href="#cb43-4"></a><span class="cf">for</span> task_type <span class="kw">in</span> [<span class="st">"Puzzle"</span>, <span class="st">"Waldo"</span>, <span class="st">"Natural"</span>]:</span>
-<span id="cb43-5"><a href="#cb43-5"></a>    ttest_result <span class="op">=</span> stats.ttest_ind(</span>
-<span id="cb43-6"><a href="#cb43-6"></a>        df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> baseline].avg_rp,</span>
-<span id="cb43-7"><a href="#cb43-7"></a>        df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> task_type].avg_rp,</span>
-<span id="cb43-8"><a href="#cb43-8"></a>    )</span>
-<span id="cb43-9"><a href="#cb43-9"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="sc">{}</span><span class="ch">\t</span><span class="st">: </span><span class="sc">{:0.3}</span><span class="st">"</span>.<span class="bu">format</span>(task_type, ttest_result.pvalue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a>baseline <span class="op">=</span> <span class="st">"Blank"</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="bu">print</span>(<span class="st">"Resulting p-values from the paired t-test:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="cf">for</span> task_type <span class="kw">in</span> [<span class="st">"Puzzle"</span>, <span class="st">"Waldo"</span>, <span class="st">"Natural"</span>]:</span>
+<span id="cb45-5"><a href="#cb45-5"></a>    ttest_result <span class="op">=</span> stats.ttest_ind(</span>
+<span id="cb45-6"><a href="#cb45-6"></a>        df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> baseline].avg_rp,</span>
+<span id="cb45-7"><a href="#cb45-7"></a>        df_hyp2_avg_rp[df_hyp2_avg_rp.task_type <span class="op">==</span> task_type].avg_rp,</span>
+<span id="cb45-8"><a href="#cb45-8"></a>    )</span>
+<span id="cb45-9"><a href="#cb45-9"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="sc">{}</span><span class="ch">\t</span><span class="st">: </span><span class="sc">{:0.3}</span><span class="st">"</span>.<span class="bu">format</span>(task_type, ttest_result.pvalue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Resulting p-values from the paired t-test:
