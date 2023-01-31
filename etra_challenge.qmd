@@ -67,11 +67,11 @@ from etra import ETRA
 dataset = ETRA()
 ```
 
-The directory ``data`` contains the following directories/files
+The directory ``data/`` contains the following directories/files:
 
 - ``data/`` : Contains subdirectories containing data of individual
   participants. Each subdirectory is filled with CSV files, each containing 45
-  seconds of eye tracker data.
+  seconds of eye tracker data
 - ``images/`` : Contains the images shown to the participants for each task.
 - ``DataSummary.csv`` : Contains mouse clicks of the participants for tasks like
 Puzzle or Where's Waldo.
@@ -86,7 +86,7 @@ We will be interested in the following hypotheses:
     visually stimulating then others. For example, it is not unreasonable to
     expect that a participant will stay much more engaged in a scene with a lot
     of detail to study then when looking at a blank scene. Another possibility
-    is that during visual searches (picture puzzles, where is Waldo) a
+    is that during visual searches (picture puzzles, _Where is Waldo_) a
     participant may become frustrated and just give up on the task. 
 
     The reasoning behind the way we are going to measure this is as follows.
@@ -96,10 +96,10 @@ We will be interested in the following hypotheses:
     On the other hand, when subject becomes bored or frustrated, we might expect
     that they are going to rest their gaze at some point and not move their eyes
     very much (maybe just waiting for the trial to be over) and so the frequency
-    of saccades would to decrease.
+    of saccades would decrease.
 
     However, the decrease in frequency of saccades might not be exactly
-    indicative of the subjects boredom or frustration. It is not unlikely that
+    an indicator of boredom or frustration. It is not unlikely that
     the frequency of saccades is high every time a new scene is introduced and
     naturally decreases as the subject becomes acquainted with the scene.
 
@@ -119,16 +119,16 @@ We will be interested in the following hypotheses:
     dilation) might differ in each:
 
     * in **picture puzzles** we might expect that the level of excitement is
-    kept high during the whole duration, peaking when subject finds a difference
+    kept high during the whole duration, peaking when subject finds a difference,
 
     * in _**Where is Waldo?**_ puzzle we might expect the level of excitement
     being low as the subject is having difficulties finding Waldo and peaking
-    when (if) Waldo is found
+    when (if) Waldo is found,
 
-    * viewing a **blank scene** might not excite much
+    * viewing a **blank scene** might not excite much.
 
     Therefore, it is interesting to ask which tasks and scenes are the most
-    stimulating and whether any significant distinction can be made.
+    visually stimulating and whether any significant distinction can be made.
 
 
 ```{python}
@@ -161,13 +161,28 @@ In @tbl-hyp1-data we provide a sample of the data we will use.
 ```{python}
 #| code-summary: Load data
  
-df_hyp1 = (dataset.data_dir / "data" / "{0:0>3}".format(subject_no)).glob("*FreeViewing_*.csv")
+df_hyp1 = (dataset.data_dir / "data" / "{0:0>3}".format(subject_no))\
+    .glob("*FreeViewing_*.csv")
 df_hyp1 = pd.concat((read_data(f) for f in df_hyp1)).sort_values(by="Time")
 
-df_hyp1 = df_hyp1.rename({"Time": "time", "trial_id": "trial", "LXpix": "x", "LYpix": "y", "RP": 'rp'}, axis=1)
-df_hyp1["time"] = df_hyp1.groupby(["participant_id", "trial"])["time"].transform(lambda x: x - x.min())
-df_hyp1 = df_hyp1[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id',
-       'time', 'x', 'y', 'rp']]
+df_hyp1 = df_hyp1.rename(
+    {
+        "Time": "time",
+        "trial_id": "trial",
+        "LXpix": "x",
+        "LYpix": "y",
+        "RP": 'rp'
+    },
+    axis=1
+)
+df_hyp1["time"] = df_hyp1.groupby(["participant_id", "trial"])["time"]\
+    .transform(lambda x: x - x.min())
+df_hyp1 = df_hyp1[
+    [
+       'participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id',
+       'time', 'x', 'y', 'rp'
+    ]
+]
 ```
 
 
@@ -184,10 +199,11 @@ df_hyp1.head()
 
 First step of the pre-processing will be to remove the blinks. We look at the
 pupil size and consider every value smaller than some threshold to be an
-indication of a blink. The average pupil size to be between 1 and 8 mm
+indication of a blink. We take the average pupil to be between 1 and 8 mm
 [@PupilDiameter]. We set 1 mm as our threshold. We will then discard a portion
 of our data around such points. The average blink duration ranges between 100
-and 400 ms [@BlinkDuration]. We delete another 200 ms before and after each
+and 400 ms [@BlinkDuration]. We delete 200 ms before and after each point that 
+falls below the threshold and another 200 ms before and after each
 blink/semi-blink to eliminate the initial and final parts in which the pupil was
 still partially occluded.
 
@@ -215,7 +231,13 @@ before = df_hyp1[df_hyp1.trial == '106'].assign(blinks_removed='No')
 after = remove_blinks(before).assign(blinks_removed='Yes')
 hlp = pd.concat([before, after])
 
-g = sns.relplot(data=hlp, x='time', y='rp', kind='line', row='blinks_removed', aspect=3)
+g = sns.relplot(
+    data=hlp, 
+    x='time', y='rp',
+    kind='line',
+    row='blinks_removed',
+    aspect=3
+)
 g.set_xlabels("Time (ms)")
 g.set_ylabels("Pupil size")
 g.axes[0, 0].set_title("Pupil size as measured")
@@ -264,15 +286,31 @@ df_hyp1_blank_sacc = detect_saccades_by_groups(
     df_hyp1_blank
 )
 
-trial_info_natural = df_hyp1_natural[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id']].drop_duplicates()
+trial_info_natural = df_hyp1_natural[
+    ['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id']
+    ].drop_duplicates()
 df_hyp1_natural_sacc = trial_info_natural.merge(df_hyp1_natural_sacc, on=[
     "participant_id", "trial"], how="left")
-df_hyp1_natural_sacc = df_hyp1_natural_sacc[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id', 'start_time']]
+df_hyp1_natural_sacc = df_hyp1_natural_sacc[
+    [
+        'participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id', 
+        'start_time',
+    ]
+]
 
-trial_info_blank = df_hyp1_blank[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id']].drop_duplicates()
+trial_info_blank = df_hyp1_blank[
+    ['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id']
+].drop_duplicates()
 df_hyp1_blank_sacc = trial_info_blank.merge(df_hyp1_blank_sacc, on=[
-    "participant_id", "trial"], how="left")
-df_hyp1_blank_sacc = df_hyp1_blank_sacc[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id', 'start_time']]
+    "participant_id", "trial"],
+    how="left"
+)
+df_hyp1_blank_sacc = df_hyp1_blank_sacc[
+    [
+        'participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id',
+        'start_time',
+    ]
+]
 ```
 
 ```{python}
@@ -397,10 +435,11 @@ However, we do not know what the parameter $\lambda^{(t)}$ is. It might be eithe
 $\lambda_1$ or $\lambda_2$
 depending on where we put the changing point $\tau$, so
 $$
-    \lambda^{(t)} = \begin{cases}
-        \lambda_1 && t < \tau \\
-        \lambda_2 && t \ge \tau
-    \end{cases}
+\lambda^{(t)} 
+= \begin{cases}
+    \lambda_1 & t < \tau \\
+    \lambda_2 & t \ge \tau
+\end{cases}
 $$
 
 We will try to infer these variables from our data using Bayesian statistics. We
@@ -409,11 +448,12 @@ $\lambda_2$ we need to choose from continouous distribution that is able to
 obtain (potentially) all positive values. Exponential distribution
 satisfies this requirement, so we set
 $$
-\begin{align*}
-    \lambda_1 \sim \mathrm{Exp}(\alpha)\\
-    \lambda_2 \sim \mathrm{Exp}(\alpha)
-\end{align*}
+    \lambda_1 \sim \mathrm{Exp}(\alpha)
 $$
+$$
+    \lambda_2 \sim \mathrm{Exp}(\alpha)
+$$
+
 where $\alpha$ is some hyper-parameter. As we have no prior knowledge about
 $\tau$, we simply choose
 $$
@@ -565,7 +605,9 @@ statistic = "delta"
 # Truncate values to 99% most plausible
 low, up = combined_natural.delta.quantile([0.005, 0.995])
 hlp = pd.DataFrame()
-hlp[statistic] = combined_natural[statistic].where(combined_natural[statistic].between(low, up))
+hlp[statistic] = combined_natural[statistic].where(
+    combined_natural[statistic].between(low, up)
+)
 hlp["stimulus"] = combined_natural["stimulus"]
 hlp.reset_index(inplace=True)
 
@@ -624,7 +666,9 @@ statistic = "delta"
 # Truncate values to 99% most plausible
 low, up = combined_blank.delta.quantile([0.005, 0.995])
 hlp = pd.DataFrame()
-hlp[statistic] = combined_blank[statistic].where(combined_blank[statistic].between(low, up))
+hlp[statistic] = combined_blank[statistic].where(
+    combined_blank[statistic].between(low, up)
+)
 hlp["trial"] = combined_blank["trial"]
 hlp.reset_index(inplace=True)
 
@@ -639,9 +683,10 @@ p_l2_lt_l1_094 = (combined_blank[combined_blank.trial == "094"].delta < 0).mean(
 p_l2_gt_l1_070 = (combined_blank[combined_blank.trial == "070"].delta > 0).mean()
 ```
 
-The situation here is much more diverse in this case. We can see that we can
-find trials on both ends of the spectrum when considering the change in
-frequency of saccades. For example, for the trial ``094`` we have
+The situation here is much more diverse in this case. In
+@fig-blank-delta-posterior we can see that we are able to find trials on both
+ends of the spectrum when considering the change in frequency of saccades. For
+example, for the trial ``094`` we have
 
 ```{python}
 #| echo: false
@@ -656,7 +701,7 @@ On the other hand, for trial ``061`` we have
 print("Pr[ lambda_2 > lambda_1 ] = {}".format(p_l2_gt_l1_070))
 ```
 
-meaning a high ptobability of an _increase_ in frequency.
+meaning a high probability of an _increase_ in frequency.
 
 This seems quite surprising as one might expect consistent behaviour when
 viewing the same blank scene multiple times.
@@ -747,14 +792,27 @@ In @tbl-hyp2-data we list a sample of data we work with.
 #| code-summary: Load data
 #| output: false
 
-df_hyp2 = (dataset.data_dir / "data" / "{0:0>3}".format(subject_no)).glob("*FreeViewing_*.csv")
+df_hyp2 = (dataset.data_dir / "data" / "{0:0>3}".format(subject_no))\
+    .glob("*FreeViewing_*.csv")
 df_hyp2 = pd.concat((read_data(f) for f in df_hyp2)).sort_values(by="Time")
 
-df_hyp2 = df_hyp2.rename({"Time": "time", "trial_id": "trial", "RP": "rp"}, axis=1)
-df_hyp2["time"] = df_hyp2.groupby(["participant_id", "trial"])["time"].transform(lambda x: x - x.min())
+df_hyp2 = df_hyp2.rename(
+    {
+        "Time": "time",
+        "trial_id": "trial",
+        "RP": "rp"
+    },
+    axis=1
+)
+df_hyp2["time"] = df_hyp2.groupby(["participant_id", "trial"])["time"]\
+    .transform(lambda x: x - x.min())
 
-df_hyp2 = df_hyp2[['participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id',
-       'time','rp']]
+df_hyp2 = df_hyp2[
+    [
+        'participant_id', 'trial', 'fv_fixation', 'task_type', 'stimulus_id',
+        'time','rp',
+    ]
+]
 ```
 
 
@@ -804,7 +862,12 @@ scenes there are no significant outliers in any other category.
 #| label: fig-avg-rp-dist-box
 #| fig-cap: Distribution of the average pupil size across different task types.
 
-g = sns.catplot(data=df_hyp2_avg_rp, x='task_type', y='avg_rp', kind='box', aspect=3);
+g = sns.catplot(
+    data=df_hyp2_avg_rp,
+    x='task_type', y='avg_rp',
+    kind='box',
+    aspect=3
+)
 g.set_xlabels("Task type")
 g.set_ylabels("Average pupil size")
 g.set(title="Average pupil size distribution.");
@@ -828,7 +891,12 @@ our data to be roughly normally distributed.
 #| label: fig-avg-rp-dist-bar
 #| fig-cap: Distribution of average pupil sizes by task type.
 
-g = sns.displot(data=df_hyp2_avg_rp, x='avg_rp', hue='task_type', col="task_type")
+g = sns.displot(
+    data=df_hyp2_avg_rp,
+    x='avg_rp',
+    hue='task_type',
+    col="task_type"
+)
 g.set_xlabels("Average pupil size")
 g.set_ylabels("Count");
 ```
@@ -844,7 +912,9 @@ the data was drawn from a normal distribution.
  
 print("Resulting p-values from the Shapiro-Wilk test:\n")
 for task_type in ["Blank", "Puzzle", "Waldo", "Natural"]:
-    shapiro_result = stats.shapiro(df_hyp2_avg_rp[df_hyp2_avg_rp.task_type == task_type].avg_rp)
+    shapiro_result = stats.shapiro(
+        df_hyp2_avg_rp[df_hyp2_avg_rp.task_type == task_type].avg_rp
+    )
     print("\t{}\t: {:0.3}".format(task_type, shapiro_result.pvalue))
 ```
 

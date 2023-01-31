@@ -33,7 +33,14 @@ To generate an html report run
 quarto render etra_challenge.qmd --to html
 ```
 
-To generate a pdf run
+To generate a pdf first make sure you have TeX installed. You can use
+``sh
+quarto install tinytex
+``
+Note that this is not installed in the ``PATH`` and does not affect your global
+tex.
+
+Now render with:
 ```sh
 quarto render etra_challenge.qmd --to pdf
 ```
