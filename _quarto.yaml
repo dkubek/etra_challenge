@@ -1,4 +1,5 @@
 project:
+  title: etra-challenge
   # type: website
   output-dir: _output
 
