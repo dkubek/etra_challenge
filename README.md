@@ -47,6 +47,8 @@ quarto render etra_challenge.qmd --to pdf
 
 The output of these commands will be stored in ``output/``.
 
+To convert the report to a jupyter notebook see [Converting Notebooks](https://quarto.org/docs/tools/jupyter-lab.html#converting-notebooks).
+
 ## Publishing to github pages
 
 Enter the ``poetry`` environment.
