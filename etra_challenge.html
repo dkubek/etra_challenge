@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dávid Kubek">
-<meta name="dcterms.date" content="2023-01-30">
+<meta name="dcterms.date" content="2023-01-31">
 
 <title>ETRA Challenge Report</title>
 <style>
@@ -107,40 +107,16 @@ div.csl-indent {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 20,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
-  }
-}</script>
+<script src="etra_challenge_files/libs/clipboard/clipboard.min.js"></script>
+<script src="etra_challenge_files/libs/quarto-html/quarto.js"></script>
+<script src="etra_challenge_files/libs/quarto-html/popper.min.js"></script>
+<script src="etra_challenge_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="etra_challenge_files/libs/quarto-html/anchor.min.js"></script>
+<link href="etra_challenge_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="etra_challenge_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="etra_challenge_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="etra_challenge_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="etra_challenge_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -151,14 +127,10 @@ div.csl-indent {
 
 <body>
 
-<div id="quarto-search-results"></div>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
   <li><a href="#getting-data" id="toc-getting-data" class="nav-link active" data-scroll-target="#getting-data">Getting data</a></li>
@@ -186,8 +158,7 @@ div.csl-indent {
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
-    </div>
-<!-- main -->
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -209,7 +180,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 30, 2023</p>
+      <p class="date">January 31, 2023</p>
     </div>
   </div>
   
@@ -220,7 +191,7 @@ div.csl-indent {
 </header>
 
 <p>In 2019, the <a href="https://etra.acm.org/">ETRA</a> organization announced a challenge for the analysis of a dataset pertaining to human eye-movement. The objective of the challenge was to utilize various tools to uncover intriguing relationships and information within the data, potentially leading to novel insights. Additional details regarding the challenge can be found in the official <a href="https://etra.acm.org/2019/challenge.html">Challenge Track Call for Papers</a> issued by ETRA.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Imports and setup</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> warnings </span>
@@ -245,7 +216,7 @@ div.csl-indent {
 <section id="getting-data" class="level1">
 <h1>Getting data</h1>
 <p>Download zip file of the <a href="http://smc.neuralcorrelate.com/ETRA2019/ETRA2019Challenge.zip">dataset</a>. Description of the dataset and how the data was collected can be found on <a href="https://etra.acm.org/2019/challenge.html">ETRA dataset description</a>.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Download data</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> etra <span class="im">import</span> ETRA</span>
@@ -279,7 +250,7 @@ div.csl-indent {
 </ul>
 <p>Therefore, it is interesting to ask which tasks and scenes are the most stimulating and whether any significant distinction can be made.</p></li>
 </ol>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <details>
 <summary>Choose an example subject</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>subject_no <span class="op">=</span> <span class="dv">22</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -302,7 +273,7 @@ div.csl-indent {
 <li><code>rp</code>: Pupil size of the right eye.</li>
 </ul>
 <p>In <a href="#tbl-hyp1-data">Table&nbsp;1</a> we provide a sample of the data we will use.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Load data</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df_hyp1 <span class="op">=</span> (dataset.data_dir <span class="op">/</span> <span class="st">"data"</span> <span class="op">/</span> <span class="st">"</span><span class="sc">{0:0&gt;3}</span><span class="st">"</span>.<span class="bu">format</span>(subject_no)).glob(<span class="st">"*FreeViewing_*.csv"</span>)</span>
@@ -314,7 +285,7 @@ div.csl-indent {
 <span id="cb4-7"><a href="#cb4-7"></a>       <span class="st">'time'</span>, <span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'rp'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <details>
 <summary>Print sample of hypothesis 1 data</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>df_hyp1.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -410,7 +381,7 @@ div.csl-indent {
 <section id="data-manipulation" class="level2">
 <h2 class="anchored" data-anchor-id="data-manipulation">Data Manipulation</h2>
 <p>First step of the pre-processing will be to remove the blinks. We look at the pupil size and consider every value smaller than some threshold to be an indication of a blink. The average pupil size to be between 1 and 8 mm <span class="citation" data-cites="PupilDiameter">(<a href="#ref-PupilDiameter" role="doc-biblioref"><span>“Pupil Diameter,”</span> n.d.</a>)</span>. We set 1 mm as our threshold. We will then discard a portion of our data around such points. The average blink duration ranges between 100 and 400 ms <span class="citation" data-cites="BlinkDuration">(<a href="#ref-BlinkDuration" role="doc-biblioref"><span>“Average Duration of a Single Eye Blink,”</span> n.d.</a>)</span>. We delete another 200 ms before and after each blink/semi-blink to eliminate the initial and final parts in which the pupil was still partially occluded.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <details>
 <summary>Function for removing blinks</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> remove_blinks(data : pd.DataFrame, column<span class="op">=</span><span class="st">'rp'</span>):</span>
@@ -424,7 +395,7 @@ div.csl-indent {
 <span id="cb6-9"><a href="#cb6-9"></a>    <span class="cf">return</span> ans.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Plot pupil size with and without blinks</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>before <span class="op">=</span> df_hyp1[df_hyp1.trial <span class="op">==</span> <span class="st">'106'</span>].assign(blinks_removed<span class="op">=</span><span class="st">'No'</span>)</span>
@@ -447,7 +418,7 @@ div.csl-indent {
 </div>
 </div>
 <p>For each trial, we will detect saccades using the <a href="https://github.com/psychoinformatics-de/remodnav">REMoDNaV</a> python library <span class="citation" data-cites="Dar2019">(<a href="#ref-Dar2019" role="doc-biblioref">Dar, Wagner, and Hanke 2019</a>)</span>. This gives us the start and end times of saccades (and other events) as well as additional information such as start and end position of the gaze or peak velocity. We will consider only the start times of the saccades and disregard all other data. <a href="#tbl-natural-sacc-data">Table&nbsp;2</a> lists a sample of the processed data.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Function for detecting saccades</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> etra <span class="im">import</span> detect</span>
@@ -466,7 +437,7 @@ div.csl-indent {
 <span id="cb8-14"><a href="#cb8-14"></a>    <span class="cf">return</span> pd.concat(ans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Preprocess data</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>df_hyp1_natural <span class="op">=</span> df_hyp1[df_hyp1.task_type <span class="op">==</span> <span class="st">"Natural"</span>]</span>
@@ -490,7 +461,7 @@ div.csl-indent {
 <span id="cb9-19"><a href="#cb9-19"></a>df_hyp1_blank_sacc <span class="op">=</span> df_hyp1_blank_sacc[[<span class="st">'participant_id'</span>, <span class="st">'trial'</span>, <span class="st">'fv_fixation'</span>, <span class="st">'task_type'</span>, <span class="st">'stimulus_id'</span>, <span class="st">'start_time'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Print sample of processed data</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>df_hyp1_natural_sacc.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -568,7 +539,7 @@ div.csl-indent {
 <section id="methodology-and-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="methodology-and-exploration">Methodology and Exploration</h2>
 <p>To help us understand how we should model the observations, we first look at the distribution of saccades in time. The <span class="math inline">\(x\)</span> axis represents the time from the start of a trial and each row is a sequence of dots representing the start time of a saccade.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <details>
 <summary>Plot the distriution of saccades in time</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>g <span class="op">=</span> sns.catplot(</span>
@@ -600,7 +571,7 @@ div.csl-indent {
 \]</span> or said differently, for a small enough time interval, it is impossible to have two or more successive saccades.</p>
 <p>The number of saccades in some interval <span class="math inline">\([t, s]\)</span> can be expressed then as <span class="math inline">\(N(t) - N(s)\)</span>. Additionally, we will assume that for any two disjoint time intervals <span class="math inline">\([t_1, t_2]\)</span> and <span class="math inline">\([t_3, t_4]\)</span>, the distribution of <span class="math inline">\(N(t_2) - N(t_1)\)</span> is independent of the distribution of <span class="math inline">\(N(t_4) - N(t_3)\)</span>.</p>
 <p>With these assumtions in place, we are justified to model the occurances of saccades as a <em>Poisson process</em> with rate <span class="math inline">\(\lambda\)</span> <span class="citation" data-cites="mitzenmacher_upfal_2012">(<a href="#ref-mitzenmacher_upfal_2012" role="doc-biblioref">Mitzenmacher and Upfal 2012</a>)</span>.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Function for counting the number of saccades each second</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">def</span> saccade_frequency_count_by_second(data):</span>
@@ -616,14 +587,14 @@ div.csl-indent {
 </details>
 </div>
 <p>The theory of Poisson processes then tells us that the number of saccades in some time period of length <span class="math inline">\(t\)</span> is a Poisson random variable with expectation <span class="math inline">\(\lambda t\)</span>. We will divide the time of the experiment to seconds (so <span class="math inline">\(t = 1\)</span>) and count the number of saccades in each second. The <a href="#fig-saccade-dist">Figure&nbsp;3</a> illustrates such counts for one chosen trial.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Chose one scene as an example</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>stimulus <span class="op">=</span> <span class="st">"nat013"</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>scene <span class="op">=</span> df_hyp1_natural_sacc[df_hyp1_natural_sacc.stimulus_id <span class="op">==</span> stimulus]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Plot the frequency of saccades in time</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>hlp <span class="op">=</span> scene.copy()</span>
@@ -679,7 +650,7 @@ Note
 </div>
 </div>
 <p>For our modelling we will use the <a href="https://www.pymc.io/welcome.html">PyMC</a> <span class="citation" data-cites="Salvatier2016">(<a href="#ref-Salvatier2016" role="doc-biblioref">Salvatier, Wiecki, and Fonnesbeck 2016</a>)</span> implementation of Monte Carlo Markov Chains, using the NUTS sampler with default parameters to generate <span class="math inline">\(5000\)</span> samples from the posterior distribution.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <details>
 <summary>Define model for the saccade frequency</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">def</span> model_saccades(data):</span>
@@ -706,7 +677,7 @@ Note
 <span id="cb15-22"><a href="#cb15-22"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="17">
 <details>
 <summary>Run the chain</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>model <span class="op">=</span> model_saccades(scene)</span>
@@ -715,7 +686,7 @@ Note
 </details>
 </div>
 <p><a href="#fig-example-chain-posterior">Figure&nbsp;4</a> shows the posterior distributions of the parameters <span class="math inline">\(\tau\)</span>, <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span> and <span class="math inline">\(\Delta = \lambda_2 - \lambda_1\)</span>, while <a href="#tbl-example-chain-summary">Table&nbsp;3</a> provides summary statistics from the chain.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="18">
 <details>
 <summary>Plot the posterior of model parameters</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>az.plot_posterior(trace)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -729,7 +700,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="19">
 <details>
 <summary>Print summary statistics of the chain</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>az.summary(trace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -810,14 +781,14 @@ Note
 </div>
 </div>
 <p>Notice that the posterior distribution of <span class="math inline">\(\Delta\)</span> is centered around 0, leading us to believe there is no change in the the rate of saccades. In case there was a change, we would expect a shift either to the positive or negative side. This notion is further reinforced by looking at the Highest Density Interval (HDI) of the posterior distribution of <span class="math inline">\(\tau\)</span> which basically spans the entire duration of the trial.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="20">
 <details>
 <summary>Calculate the probability of null hypothesis</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>p_l2_ge_l1 <span class="op">=</span> np.mean(trace.posterior[<span class="st">"delta"</span>].values <span class="op">&gt;=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We have</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr[H_0] = Pr[lambda_2 &gt;= lambda_1]= 0.47</code></pre>
 </div>
@@ -826,7 +797,7 @@ Note
 <section id="natural-scenes" class="level3">
 <h3 class="anchored" data-anchor-id="natural-scenes">Natural scenes</h3>
 <p>We do the same analysis as above for all trials using <em>Natural</em> scenes for subject <code>022</code>.</p>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="22">
 <details>
 <summary>Sample the posterior distributions for all natural scenes</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>stimuli_natural <span class="op">=</span> df_hyp1_natural_sacc.stimulus_id.unique()</span>
@@ -840,7 +811,7 @@ Note
 <span id="cb21-9"><a href="#cb21-9"></a>        chains_natural.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="23">
 <details>
 <summary>Combine Natural data from all chains</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>combined_natural <span class="op">=</span> []</span>
@@ -854,7 +825,7 @@ Note
 </details>
 </div>
 <p><a href="#fig-natural-delta-posterior">Figure&nbsp;5</a> shows the posterior density estimate for <span class="math inline">\(\Delta\)</span> for all <em>Natural</em> scene trials.</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="24">
 <details>
 <summary>Plot Posterior density of <span class="math inline">\(\Delta\)</span> for all natural scenes.</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
@@ -885,7 +856,7 @@ Note
 <section id="blank-scenes" class="level3">
 <h3 class="anchored" data-anchor-id="blank-scenes">Blank scenes</h3>
 <p>We now repeat the exact same procedure, but for trials with <em>Blank</em> scene.</p>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="25">
 <details>
 <summary>Sample the posterior distributions for all blank scenes</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>trials_blank <span class="op">=</span> df_hyp1_blank_sacc.trial.unique()</span>
@@ -899,7 +870,7 @@ Note
 <span id="cb24-9"><a href="#cb24-9"></a>        chains_blank.append(chain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="26">
 <details>
 <summary>Combine Blank data from all chains</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>combined_blank <span class="op">=</span> []</span>
@@ -912,7 +883,7 @@ Note
 <span id="cb25-8"><a href="#cb25-8"></a>combined_blank <span class="op">=</span> combined_blank.assign(abs_delta<span class="op">=</span><span class="kw">lambda</span> _: np.<span class="bu">abs</span>(_[<span class="st">'delta'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-execution_count="27">
 <details>
 <summary>Plot posterior density of <span class="math inline">\(\Delta\)</span> for all blank scenes.</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>statistic <span class="op">=</span> <span class="st">"delta"</span></span>
@@ -935,7 +906,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-execution_count="28">
 <details>
 <summary>Compute probabilities of extreme cases</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>p_l2_lt_l1_094 <span class="op">=</span> (combined_blank[combined_blank.trial <span class="op">==</span> <span class="st">"094"</span>].delta <span class="op">&lt;</span> <span class="dv">0</span>).mean()</span>
@@ -943,13 +914,13 @@ Note
 </details>
 </div>
 <p>The situation here is much more diverse in this case. We can see that we can find trials on both ends of the spectrum when considering the change in frequency of saccades. For example, for the trial <code>094</code> we have</p>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="29">
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr[ lambda_2 &lt; lambda_1 ] = 0.9917</code></pre>
 </div>
 </div>
 <p>so there is a very high probability of a <em>decrease</em> in the frequency of saccades at some point in the trial. On the other hand, for trial <code>061</code> we have</p>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-execution_count="30">
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr[ lambda_2 &gt; lambda_1 ] = 0.99975</code></pre>
 </div>
@@ -960,27 +931,27 @@ Note
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div class="cell" data-execution_count="30">
+<div class="cell" data-execution_count="31">
 <details>
 <summary>Compute the probability of null hypothesis being true</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>p_l2_ge_l1_natural_combined <span class="op">=</span> (combined_natural.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Considering all natural scenes as a whole, the probability that the frequency of saccades does not decrease is</p>
-<div class="cell" data-execution_count="31">
+<div class="cell" data-execution_count="32">
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr[ H_0 ] = Pr[ lambda_2 &gt;= lambda_1 ] = 0.393</code></pre>
 </div>
 </div>
 <p>which is not low enough to reject the null hypothesis</p>
-<div class="cell" data-execution_count="32">
+<div class="cell" data-execution_count="33">
 <details>
 <summary>Compute probability of null hypothesis for Blank trials</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>p_l2_ge_l1_blank_combined <span class="op">=</span> (combined_blank.delta <span class="op">&gt;=</span> <span class="dv">0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Considering all the blank trials as a whole, the probability of increase in saccades is</p>
-<div class="cell" data-execution_count="33">
+<div class="cell" data-execution_count="34">
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr[ H_0 ] = Pr[ lambda_2 &gt;= lambda_1 ] = 0.421</code></pre>
 </div>
@@ -1010,7 +981,7 @@ Note
 <li><code>rp</code>: indicating the size of the right pupil.</li>
 </ul>
 <p>In <a href="#tbl-hyp2-data">Table&nbsp;4</a> we list a sample of data we work with.</p>
-<div class="cell" data-execution_count="34">
+<div class="cell" data-execution_count="35">
 <details>
 <summary>Load data</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>df_hyp2 <span class="op">=</span> (dataset.data_dir <span class="op">/</span> <span class="st">"data"</span> <span class="op">/</span> <span class="st">"</span><span class="sc">{0:0&gt;3}</span><span class="st">"</span>.<span class="bu">format</span>(subject_no)).glob(<span class="st">"*FreeViewing_*.csv"</span>)</span>
@@ -1023,7 +994,7 @@ Note
 <span id="cb34-8"><a href="#cb34-8"></a>       <span class="st">'time'</span>,<span class="st">'rp'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="35">
+<div class="cell" data-execution_count="36">
 <details>
 <summary>List a sample of data for hypothesis 2.</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>df_hyp2.head() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1107,7 +1078,7 @@ Note
 <section id="data-manipulation-1" class="level2">
 <h2 class="anchored" data-anchor-id="data-manipulation-1">Data Manipulation</h2>
 <p>Again, we remove the blinks and then calculate the mean pupil size for each trial.</p>
-<div class="cell" data-execution_count="36">
+<div class="cell" data-execution_count="37">
 <details>
 <summary>Remove blinks and calculate average pupil size.</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>df_hyp2_avg_rp <span class="op">=</span> df_hyp2.groupby(<span class="st">"trial"</span>)<span class="op">\</span></span>
@@ -1119,7 +1090,7 @@ Note
 <span id="cb36-7"><a href="#cb36-7"></a>    .drop(<span class="st">"trial"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="37">
+<div class="cell" data-execution_count="38">
 <details>
 <summary>Report the average pupil size for each task type.</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>df_hyp2_avg_rp.head().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1173,7 +1144,7 @@ Note
 <section id="exploration" class="level2">
 <h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
 <p>Looking at <a href="#fig-avg-rp-dist-box">Figure&nbsp;7</a>, we can see that there except for the “Natural” scenes there are no significant outliers in any other category. <a href="#tbl-avg-rp-summary">Table&nbsp;6</a> lists summary statistics about the average pupil size.</p>
-<div class="cell" data-execution_count="38">
+<div class="cell" data-execution_count="39">
 <details>
 <summary>Plot the distribution of the average pupil size.</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>g <span class="op">=</span> sns.catplot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'task_type'</span>, y<span class="op">=</span><span class="st">'avg_rp'</span>, kind<span class="op">=</span><span class="st">'box'</span>, aspect<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span>
@@ -1190,7 +1161,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="39">
+<div class="cell" data-execution_count="40">
 <details>
 <summary>Compute summary statistics for average pupil sizes</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>df_hyp2_avg_rp.groupby(<span class="st">"task_type"</span>).describe().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1281,7 +1252,7 @@ Note
 </div>
 </div>
 <p>Let us look at the distribution of the means. If we want to use t-test, we want our data to be roughly normally distributed.</p>
-<div class="cell" data-execution_count="40">
+<div class="cell" data-execution_count="41">
 <details>
 <summary>Plot the distribution of average pupil sizes</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>g <span class="op">=</span> sns.displot(data<span class="op">=</span>df_hyp2_avg_rp, x<span class="op">=</span><span class="st">'avg_rp'</span>, hue<span class="op">=</span><span class="st">'task_type'</span>, col<span class="op">=</span><span class="st">"task_type"</span>)</span>
@@ -1298,7 +1269,7 @@ Note
 </div>
 </div>
 <p>Looking at the graphs in <a href="#fig-avg-rp-dist-bar">Figure&nbsp;8</a>, the distribution of the data seems to be roughly normal, however it is hard to gauge this from such a small sample size. We use the Shapiro-Wilk test, which tests the null hypothesis that the data was drawn from a normal distribution.</p>
-<div class="cell" data-execution_count="41">
+<div class="cell" data-execution_count="42">
 <details>
 <summary>Compute Shapiro-Wilk test for distribution normality</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a><span class="bu">print</span>(<span class="st">"Resulting p-values from the Shapiro-Wilk test:</span><span class="ch">\n</span><span class="st">"</span>)</span>
@@ -1320,7 +1291,7 @@ Note
 <section id="results-1" class="level2">
 <h2 class="anchored" data-anchor-id="results-1">Results</h2>
 <p>Given that we are evaluating the same participant across different tasks, it is appropriate to use the paired t-test as the data points are linked to one another. This statistical test allows for the comparison of each task with our chosen baseline, which is the blank scene.</p>
-<div class="cell" data-execution_count="42">
+<div class="cell" data-execution_count="43">
 <details>
 <summary>Compute paired t-test for each category with the baseline.</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>baseline <span class="op">=</span> <span class="st">"Blank"</span></span>
@@ -1367,11 +1338,10 @@ Mitzenmacher, Michael, and Eli Upfal. 2012. <em>Probability and Computing Random
 Salvatier, John, Thomas V. Wiecki, and Christopher Fonnesbeck. 2016. <span>“Probabilistic Programming in Python Using <span>PyMC</span>3.”</span> <em><span>PeerJ</span> Computer Science</em> 2 (April): e55. <a href="https://doi.org/10.7717/peerj-cs.55">https://doi.org/10.7717/peerj-cs.55</a>.
 </div>
 </div>
-
-
 </section>
 
-</main> <!-- /main -->
+</main>
+<!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
