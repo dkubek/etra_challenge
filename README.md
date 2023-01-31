@@ -3,7 +3,7 @@
 Data Analysis of the ETRA Dataset.
 
 You can view the render of this report here: 
-https://github.com/dkubek/etra-challenge
+https://dkubek.github.io/etra_challenge/
 
 ## Setup
 
